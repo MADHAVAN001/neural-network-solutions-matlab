@@ -1,11 +1,11 @@
 P_train = P_train_std; Val.P = Val_std.P; %%% Use this line if you use STD preprocessing on the data. IMPORTANT: Run preprocess.m first 
 
-num_iterations = 23;
+num_iterations = 24;
 Missclassification_rate = zeros(num_iterations,1);
 mse_performance = zeros(num_iterations,1);
 num_hidden_layers = 1;
 for num_neurons = 10:2:57
-    [net] = newff(minmax(P_train),[num_neurons 1],{'tansig','tansig'},'trainbfg');
+    [net] = newff(minmax(P_train),[num_neurons 1],{'tansig','tansig'},'trainlm');
     net.trainParam.epochs =100;
     net.trainParam.min_grad=1e-20;
     net.trainParam.max_fail = 25;
@@ -35,26 +35,26 @@ for num_neurons = 10:2:57
     mse_performance((num_neurons-10)/2+1,1) = perform(net,T_test,test_outputs);
     
     %plot and save the performance figure
-    name = ['Trainbfg\performance_',num2str(num_hidden_layers),'_',num2str(num_neurons)];
+    name = ['Trainlm\performance_',num2str(num_hidden_layers),'_',num2str(num_neurons)];
     h=figure;
     plotperform(tr);
     saveas(h,name,'jpg');
     
     %plot and save trainstate
-    name = ['Trainbfg\plottrainstate',num2str(num_hidden_layers),'_',num2str(num_neurons)];
+    name = ['Trainlm\plottrainstate',num2str(num_hidden_layers),'_',num2str(num_neurons)];
     h=figure;
     plottrainstate(tr);
     saveas(h,name,'jpg');
     
     %plot and save regression
-    name = ['Trainbfg\plotregression',num2str(num_hidden_layers),'_',num2str(num_neurons)];
+    name = ['Trainlm\plotregression',num2str(num_hidden_layers),'_',num2str(num_neurons)];
     h=figure;
     plotregression(T_train,outputs);
     saveas(h,name,'jpg');
     
     
     %plot and save histogram
-    name = ['Trainbfg\plothistogram',num2str(num_hidden_layers),'_',num2str(num_neurons)];
+    name = ['Trainlm\plothistogram',num2str(num_hidden_layers),'_',num2str(num_neurons)];
     h=figure;
     ploterrhist(errors);
     saveas(h,name,'jpg');
@@ -66,7 +66,7 @@ for i = 1:num_iterations
 end
 
 %plotting misclassification rate
-name = ['Trainbfg\misclassification_rate'];
+name = ['Trainlm\misclassification_rate'];
 h=figure;
 plot(x,Missclassification_rate);
 saveas(h,name,'jpg');
@@ -75,8 +75,8 @@ saveas(h,name,'jpg');
 %plotting misclassification rate
 h=figure;
 plot(x,mse_performance);
-name = ['Trainbfg\mseperformance_rate'];
+name = ['Trainlm\mseperformance_rate'];
 saveas(h,name,'jpg');
 
 
-save('Misclassification_rate',Missclassification_rate);
+%save('Misclassification_rate',Missclassification_rate);
