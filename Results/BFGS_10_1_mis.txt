@@ -1,0 +1,25 @@
+
+%BFGS 10 1
+
+Missclassification_rate =
+
+    0.0576
+
+
+%BFGS 10 10 1
+
+Missclassification_rate =
+
+    0.0674
+
+%BFGS 57 1
+
+Missclassification_rate =
+
+    0.3989
+
+%BFGS 57 1 with reduced minimum gradient to net.trainParam.min_grad=1e-20;
+
+Missclassification_rate =
+
+    0.0609
